@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Rebuild the "My Week as a Smoothie" YouTube Short.
+# Rebuild the "My Week as a Smoothie" YouTube Short (optimized 25s cut).
 #
 # Inputs (place alongside this script before running):
 #   f1_hyped.png  - smoothie, arms up / hyped      (Monday)
 #   f2_happy.png  - smoothie, calm & happy          (Tuesday / Wednesday)
 #   f3_tired.png  - smoothie, sweating / drained     (Thursday)
 #   f4_out.png    - smoothie, dizzy / knocked over   (Friday)
-#   audio.mp3     - ~64s backing track
+#   audio.mp3     - backing track (first 25s is used)
 #
 # Requirements: ffmpeg, python3 with pillow numpy scipy.
 set -euo pipefail
@@ -16,15 +16,21 @@ cd "$(dirname "$0")"
 #    whites: eyes, straw, umbrella, dizzy spirals).
 python3 process.py
 
-# 2) Composite: animated pink gradient + per-day character animation + captions.
+# 2) Generate the dynamic filter_complex graph (pops, bounces, jitter,
+#    drunk-wobble, spring-in captions) — timing math lives here.
+python3 gen_filter.py
+
+# 3) Composite: animated pink gradient + per-day character animation +
+#    captions, muxed with a trimmed/faded 25s slice of the track.
 ffmpeg -hide_banner -loglevel warning -stats \
-  -f lavfi -i "gradients=s=1080x1920:c0=0xFF5C9E:c1=0xFFD9EA:x0=0:y0=0:x1=1080:y1=1920:d=64:speed=0.010" \
+  -f lavfi -i "gradients=s=1080x1920:c0=0xFF4D97:c1=0xFFC2DF:x0=0:y0=1920:x1=1080:y1=0:d=25:speed=0.06" \
   -loop 1 -i f1_t.png -loop 1 -i f2_t.png -loop 1 -i f3_t.png -loop 1 -i f4_t.png \
   -i audio.mp3 \
-  -filter_complex_script filter.txt \
+  -filter_complex_script filter_fast.txt \
   -map "[vout]" -map 5:a \
-  -t 64 -r 30 \
-  -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p \
+  -af "afade=t=in:st=0:d=0.12,afade=t=out:st=24.5:d=0.5" \
+  -t 25 -r 30 \
+  -c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p \
   -c:a aac -b:a 192k -movflags +faststart \
   smoothie_week_short.mp4 -y
 
