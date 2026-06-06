@@ -1,0 +1,27 @@
+[0:v]format=rgba,fps=30,scale=1080:1920[bg];
+[1:v]format=rgba,scale=720:720[c1];
+[2:v]format=rgba,scale=720:720,split=2[c2a][c2b];
+[3:v]format=rgba,scale=720:720[c3];
+[4:v]format=rgba,scale=720:720,pad=860:860:70:70:color=0x00000000,rotate='0.10*sin(2*PI*1.2*t)':c=none:ow=860:oh=860[c4];
+[bg][c1]overlay=x=180:y='600-90*abs(sin(2*PI*1.4*t))':enable='between(t,0,12)'[v1];
+[v1][c2a]overlay=x='180+30*sin(2*PI*0.6*t)':y='600-70*abs(sin(2*PI*1.2*t))':enable='between(t,12,25)'[v2];
+[v2][c2b]overlay=x='180+25*sin(2*PI*0.5*t)':y='600-45*abs(sin(2*PI*1.0*t))':enable='between(t,25,38)'[v3];
+[v3][c3]overlay=x='180+6*sin(2*PI*20*t)':y='600-20*abs(sin(2*PI*0.8*t))+5*sin(2*PI*18*t)':enable='between(t,38,51)'[v4];
+[v4][c4]overlay=x=110:y=560:enable='between(t,51,64)'[v5];
+[v5]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='ME vs THE WORK WEEK':fontcolor=0x5A1030:fontsize=58:x=(w-text_w)/2:y=70[h0];
+[h0]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='MONDAY':fontcolor=white:fontsize=120:box=1:boxcolor=0xC81E5A@0.85:boxborderw=24:x=(w-text_w)/2:y=170:enable='between(t,0,12)'[d1];
+[d1]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='TUESDAY':fontcolor=white:fontsize=120:box=1:boxcolor=0xC81E5A@0.85:boxborderw=24:x=(w-text_w)/2:y=170:enable='between(t,12,25)'[d2];
+[d2]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='WEDNESDAY':fontcolor=white:fontsize=120:box=1:boxcolor=0xC81E5A@0.85:boxborderw=24:x=(w-text_w)/2:y=170:enable='between(t,25,38)'[d3];
+[d3]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='THURSDAY':fontcolor=white:fontsize=120:box=1:boxcolor=0xC81E5A@0.85:boxborderw=24:x=(w-text_w)/2:y=170:enable='between(t,38,51)'[d4];
+[d4]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='FRIDAY':fontcolor=white:fontsize=120:box=1:boxcolor=0xC81E5A@0.85:boxborderw=24:x=(w-text_w)/2:y=170:enable='between(t,51,64)'[d5];
+[d5]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='NEW WEEK':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1470:enable='between(t,0,12)'[p1a];
+[p1a]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='NEW ME':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1590:enable='between(t,0,12)'[p1b];
+[p1b]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='STILL':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1470:enable='between(t,12,25)'[p2a];
+[p2a]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='GOT THIS':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1590:enable='between(t,12,25)'[p2b];
+[p2b]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='HALFWAY':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1470:enable='between(t,25,38)'[p3a];
+[p3a]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='THERE...':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1590:enable='between(t,25,38)'[p3b];
+[p3b]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='RUNNING ON':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=84:x=(w-text_w)/2:y=1470:enable='between(t,38,51)'[p4a];
+[p4a]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='FUMES':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1590:enable='between(t,38,51)'[p4b];
+[p4b]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='I MADE IT':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1470:enable='between(t,51,64)'[p5a];
+[p5a]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='...BARELY':fontcolor=white:bordercolor=0x5A1030:borderw=10:fontsize=92:x=(w-text_w)/2:y=1590:enable='between(t,51,64)'[p5b];
+[p5b]drawtext=fontfile=/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf:text='@dailysmoothie':fontcolor=white@0.75:fontsize=42:x=(w-text_w)/2:y=1840,format=yuv420p[vout]
